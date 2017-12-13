@@ -1,0 +1,39 @@
+{% load i18n %}
+{% load wishlist_tags %}
+
+{% if user.is_authenticated %}
+    {% with wishlists=user.wishlists.all %}
+        {# Select wishlists that contains product #}
+        {% wishlists_containing_product wishlists product as product_wishlists %}
+        {% if wishlists %}
+
+            <div class="btn-group btn-wishlist">
+                    {% for wishlist in wishlists %}
+                        {% if wishlist not in product_wishlists %}
+                            <button class="bluebutt">
+                                    <a href="{% url 'customer:wishlists-add-product' key=wishlist.key product_pk=product.pk %}">
+                                        {% blocktrans with name=wishlist.name %}
+                                            Add to wish list
+                                        {% endblocktrans %}
+                                    </a>
+                            </button>
+                        {% endif %}
+                    {% endfor %}
+            </div>
+        {% else %}
+            {# 1 or no existing wishlists - show a simple button #}
+            <form id="add_to_wishlist_form" action="{% url 'customer:wishlists-add-product' product_pk=product.pk %}" method="post" class="btn-wishlist">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-lg" data-loading-text="{% trans 'Adding...' %}">{% trans "Add to wish list" %}</button>
+            </form>
+        {% endif %}
+
+        {% for wishlist in product_wishlists %}
+            <form action="{% url 'customer:wishlists-remove-product' key=wishlist.key product_pk=product.id %}" method="post">
+                {% csrf_token %}
+
+                <button type="submit" class="bluebutt" data-loading-text="{% trans 'Removing...' %}" style="float: left">Remove from wishlist</button>
+            </form>
+        {% endfor %}
+    {% endwith %}
+{% endif %}

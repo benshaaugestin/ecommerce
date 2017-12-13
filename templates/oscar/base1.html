@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+{% load static %}
+{% load category_tags %}
+        {% load wishlist_tags %}
+
+{% load i18n %}
+<html>
+
+<html lang="{{ LANGUAGE_CODE|default:"en-gb" }}" class="no-js lt-ie9 lt-ie8 lt-ie7">
+<html lang="{{ LANGUAGE_CODE|default:"en-gb" }}" class="no-js lt-ie9 lt-ie8">
+<html lang="{{ LANGUAGE_CODE|default:"en-gb" }}" class="no-js lt-ie9">
+<html lang="{{ LANGUAGE_CODE|default:"en-gb" }}" class="no-js">
+
+<head lang="en">
+
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, initial-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="author" content="Tedallal">
+    <link rel="shortcut icon"  href="../../static/oscar/favicon.ico"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Le styles -->
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/elastislide.css' %}" />
+
+    <link rel="Stylesheet" type="text/css" href="{% static 'css/wowslider.css' %}" />
+
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+<style>
+    .thumbnail{
+        border: 0;
+        box-shadow: none;
+    }
+    ul li{
+  display: inline;
+}
+</style>
+</head>
+<body>
+        <div class="container">
+
+            <div class="row">
+
+                <div class="span12 topmenu hidden-phone">
+
+                    <ul>
+                        {% if not user.is_authenticated %}
+
+                            <li>
+
+                                <a href="{% url 'social:begin' 'facebook' %}"><button class="fconnect">fconnect</button></a> OR <a href="{% url 'customer:login' %}">Login</a>
+
+                            </li>
+                        {% endif %}
+
+                        <li>|</li>
+
+                        <li><button class="userbutt" type="button"><a href="{% url 'customer:summary' %}">My Account</a></button></li>
+
+                        <li>|</li>
+
+                        <li><button class="cartbutt" type="button"><a href="{% url 'basket:summary' %}">My Cart</a></button></li>
+                        {% if user.is_staff or perms.partner.dashboard_access %}
+                             <li>|</li>
+                            <li><a href="{% url 'dashboard:index' %}"><i class="icon-list-ul"></i>Dashboard</a></li>
+                        {% endif %}
+
+                        {% if user.is_authenticated %}
+                            <li>|</li>
+                               <li>
+                                   {% with wishlists=user.wishlists.all %}
+                                   {% for wishlist in wishlists %}
+                                        {% blocktrans with name=wishlist.name url=wishlist.get_absolute_url %}
+                                            <a href="{{ url }}">wishlist</a>
+                                        {% endblocktrans %}
+                                   {% endfor %}
+                                   {% endwith %}
+                                </li>
+
+                            <li>|</li>
+                            <li><a id="logout_link" href="{% url 'customer:logout' %}"><b class="logout">Logout</b></a></li>
+
+                        {% endif %}
+                    </ul>
+
+                </div>
+
+                <!--#################### phone menu ###############-->
+
+                <div class="span12 topmenu visible-phone">
+
+                    <ul>
+
+                        <li>
+
+                            <a href="{% url 'customer:login' %}">Login</a>
+
+                        </li>
+
+                        <li>|</li>
+
+                        <li><button class="userbutt" type="button"></button></li>
+
+                        <li>|</li>
+
+                        <li><button class="cartbutt" type="button"></button></li>
+
+                        <li>|</li>
+
+                        <li>
+
+                              <div class="topselect">
+
+                                <select>
+
+                                    <option>KD</option>
+
+                                    <option>USD</option>
+
+                                    <option>AUD</option>
+
+                                    <option>EUR</option>
+
+                                </select>
+
+                              </div>
+
+                        </li>
+
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="container shadow">
+            <div class="row">
+                <div class="span12 headrow">
+                    <div class="row">
+                        <div class="span2">
+                            <div class="logo"><a href="{% url 'catalogue:index' %}"><img src="{% static '/img/logo.png' %}" alt="Tedallal"/></a></div>
+                        </div>
+                        <div class="span10">
+                            <div class="navbarwrap">
+                                    <div class="navbar">
+
+                                        <div class="navbar-inner">
+
+                                            <div class="container">
+
+                                                <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+
+                                                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse-mainmenu">
+
+                                                <span class="icon-search"></span>
+
+                                                </a>
+                                                <!-- Be sure to leave the brand out there if you want it shown -->
+                                                <!-- Everything you want hidden at 940px or less, place within here -->
+                                                <ul class="nav">
+
+                                                    <li><a href="{% url 'catalogue:index' %}">Home</a></li>
+
+                                                    <li class="divider-vertical"></li>
+
+                                                    <li class="dropdown">
+
+                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories</a>
+
+                                                        <ul class="dropdown-menu">
+                                                                    {% category_tree as tree_categories %}
+                                                                    {% if tree_categories %}
+                                                                        {% for tree_category, info in tree_categories %}
+                                                                            <li>
+                                                                                <a href="{{ tree_category.get_absolute_url }}">
+                                                                                    {{ tree_category.name }}
+                                                                                </a>
+                                                                            </li>
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                        </ul>
+                                                    </li>
+
+                                                    <li class="divider-vertical"></li>
+
+                                                    <!--<li class="dropdown">-->
+
+                                                        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Brands</a>-->
+
+                                                        <!--<ul class="dropdown-menu">-->
+
+                                                            <!--<li>-->
+
+                                                                <!--<ul>-->
+
+                                                                    <!--<li><a href="#">Brand 1</a></li>-->
+
+                                                                    <!--<li><a href="#">Brand 2</a></li>-->
+
+                                                                    <!--<li><a href="#">Brand 3</a></li>-->
+
+                                                                    <!--<li><a href="#">Brand 4</a></li>-->
+
+                                                                <!--</ul>-->
+
+                                                                <!--<ul class="rightdropmenu">-->
+
+                                                                    <!--<li><a href="#">Brand 5</a></li>-->
+
+                                                                    <!--<li><a href="#">Brand 6</a></li>-->
+
+                                                                    <!--<li><a href="#">Brand 7</a></li>-->
+
+                                                                    <!--<li><a href="#">Brand 8</a></li>-->
+
+                                                                <!--</ul>-->
+
+                                                            <!--</li>-->
+
+                                                        <!--</ul>-->
+
+                                                    <!--</li>-->
+
+                                                    <li class="divider-vertical"></li>
+
+                                                </ul>
+
+                                                <div class="nav-collapse collapse nav-collapse-mainmenu ">
+
+                                               <!-- .nav, .navbar-search, .navbar-form, etc -->
+
+                                                       <form method="get" action="{% url 'search:search' %}" class="navbar-search pull-right">
+                                                               {{ search_form.q }}
+                                                               <select name="categories" class="cform">
+                                                                            <option value="1">All Categories</option>
+                                                                   {% category_tree as tree_categories %}
+                                                                    {% if tree_categories %}
+                                                                        {% for tree_category, info in tree_categories %}
+                                                                            <option value="{{ tree_category.id }}">
+                                                                                    {{ tree_category.name }}
+                                                                            </option>
+                                                                        {% endfor %}
+                                                                    {% endif %}
+
+                                                               </select>
+                                                            <input type="submit" class="nav-searchbutt" value="{% trans "Search" %}" class="btn btn-default" />
+                                                       </form>
+                                               </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="span10 offset2">
+                                {% block breadcrumbs %}
+                                    <ul type="none" class="bcrumb">
+                                        <li>
+                                            <a href="{{ homepage_url }}">{% trans "Home" %}</a>
+                                        </li>
+                                        <li><a href="{{ category.get_absolute_url }}">/ {{ category.name }}</a></li>
+                                    </ul>
+                                {% endblock breadcrumbs %}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row maincurve"><div class="span12"></div></div>
+
+
+
+            <!--*********************************************** main content area ************************************ -->
+
+
+            {% block content %}{% endblock %}
+
+
+            <!--***************************************************** footer ************************************ -->
+
+            <div class="row">
+
+                <div class="span12 footrow">
+                    <div class="row">
+                        <div class="span3">
+                            <div class="footbox footbox1st">
+                                <h3>Information</h3>
+                                    <ul>
+                                        <li><a href="#">Contact Us</a></li><br/>
+
+                                        <li><a href="#">Delivery</a></li><br/>
+
+                                        <li><a href="#">Returns</a></li><br/>
+
+                                        <li><a href="#">Terms &AMP; Conditions</a></li><br/>
+
+                                        <li><a href="#">Privacy Policy</a></li><br/>
+
+                                        <li><a href="/about_us/">About Us</a></li><br />
+                                    </ul>
+                            </div>
+                        </div>
+
+                        <div class="span3">
+
+                            <div class="footbox">
+
+                                <h3>Your Account</h3>
+
+                                <ul>
+
+
+                                    <li><a href="{% url 'customer:login' %}">Log in</a></li><br />
+
+                                    <li><a href="{% url 'customer:login' %}">Create an Account</a></li><br />
+
+                                    <li><a href="#">Order History</a></li><br />
+
+                                    <li><a href="/accounts/wishlists/50d0d7/">Wishlist</a></li><br />
+
+                                    <li><a href="#">Cancel Account</a></li><br />
+
+                                    <li><a href="#">Something else</a></li><br />
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                        <div class="span3">
+
+                            <div class="footbox">
+
+                                <h3>Contacts</h3>
+
+                                <address>
+
+                                    Tedallal Co. <br/>
+
+                                    Salmiya, Kuwait. <br/>  <br/>
+
+                                    Tel : +568-568-6549863 <br/>
+
+                                    Email : <span><a href="mailto:someone@example.com?Subject=Hello%20again" target="_top">mail@tedallal.com</a></span>
+
+                                </address>
+
+                            </div>
+
+                        </div>
+
+                        <div class="span3">
+
+                            <div class="footbox">
+
+                                <h3>Social Network</h3>
+
+                                <ul class="socialico">
+
+                                    <li><button type="button" class="tw">twitter</button><li>
+
+                                    <li><button type="button" class="fb">facebook</button><li>
+
+                                    <li><button type="button" class="inst">instagram</button><li>
+
+                                    <li><button type="button" class="gplus">google-plus</button><li>
+
+                                </ul>
+
+                                <h3>Newsletter</h3>
+
+                                <div class="newsletter"><input type="text"  placeholder="Enter Your Email"><button type="button">Find</button></div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="row">
+
+                        <div class="span12">
+
+                            <div class="copyright">
+
+                                &COPY; 2013 Tedallal Co. ALL RIGHTS RESERVED.
+
+                                <a href="#"><img src="img/logo.png"></a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+<!-----------------------------------------------Javascript----------------------------------------------------->
+<!-- Le javascript
+
+        ================================================== -->
+
+        <script type="text/javascript" src="{% static 'js/jquery-1.8.2.min.js' %}"></script>
+
+        <script src="{% static 'js/bootstrap.min.js'%}"></script>
+
+        <script src="{% static 'js/modernizr.custom.17475.js' %}"></script>
+
+        <script type="text/javascript" src="{% static 'js/jquerypp.custom.js' %}"></script>
+
+        <script type="text/javascript" src="{% static 'js/jquery.elastislide.js' %}"></script>
+
+
+
+        <script type="text/javascript" src="{% static 'js/jquery.custom.forms-0.5.js' %}"></script>
+
+
+
+        <script type="text/javascript" src="{% static 'js/wowslider.js' %}"></script>
+
+        <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+
+
+
+        <!--=========== javascript call to execute==============-->
+
+        <script type="text/javascript">
+
+        $(function() {
+
+                $('form.navbar-search').customForm();
+
+        });
+
+
+
+        $(function() {
+
+                $('.productdetailselect').customForm();
+
+        });
+
+
+
+        </script>
+
+
+
+        <script type="text/javascript">
+
+
+
+		$( '#carousel' ).elastislide();
+
+
+
+	</script>
+<!-----------------------------------------------Javascript----------------------------------------------------->
+
+
+</body>
+</html>

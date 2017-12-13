@@ -1,0 +1,148 @@
+.table-striped tbody > tr:nth-child(2n+1) > th{ text-align: right;}
+
+.dropdown-menu > li > ul > li > a{text-align: right;}
+
+
+.table th, .table td{text-align: right;}
+del{margin-right: 0;}
+
+.promenunav .btn.btn-navbar {margin-bottom: 10px;}
+
+.cat-accordionbutt {
+    border: 0px none;
+    padding-left: 2px; padding-right: 10px;
+    background-color: transparent; background-image: none;
+}
+.cat-sidemenu ul {
+    margin: 0px 15px 5px 0px;
+}
+.custom-form-select{
+    background: url("../img/arr-down2.png") no-repeat left center white;
+}
+.custom-form-focused{background: url("../img/arr-down2-hover.png") no-repeat scroll left center rgb(124, 180, 255);}
+select option{padding: 7px 5px 5px 0px;}
+
+table.tadallal-table td:last-child {
+    text-align: center;
+}
+
+/*------------------------------------------------*/
+div.topselect {
+   background: url('../img/arr-down.png') left 5px no-repeat;
+   }
+form.navbar-search .custom-form-select {
+	background: url("../img/arr-down2.png") no-repeat 5px 0px white;
+	padding: 5px 10px 5px 25px;
+}   
+form.navbar-search .custom-form-focused {
+	background-color: #7CB4FF;
+        background: url("../img/arr-down2-hover.png") no-repeat 5px 0px #7CB4FF;
+        color:white;
+        border: 1px solid #6895D3;
+}
+form.navbar-search select option{
+    padding:7px 5px 5px 0px;
+    border-bottom:1px solid #AFD1FE;
+    margin: 0px 5%;  
+}
+
+
+
+ul.profilemenu li{padding-bottom:5px;}
+
+
+.dropdown-menu > li > ul.leftdropmenu{
+    position:absolute; top:0px; left:0px; 
+}
+.dropdown-menu{direction: ltr; left:auto;}
+/*--------------------------------*/
+.footbox{
+    padding-right: 20px;
+    background: url("../img/footbox-border.png") right center no-repeat;
+}
+.footboxlast{margin-right: 20px;}
+.footbox input[type="text"]{background-image:none;}
+.footbox input:focus[type="text"]{background-image:none;}
+/*---------------------------------------------------------------------------------------------------*/
+/*------------ category page -------------*/
+
+.category-rtl{float:right;}
+/*-------------------------------------------*/
+.checkoutform {float:right;}
+.checkoutform-right{margin-left: 0; margin-right: 60px;}
+
+/*--------------------------------*/
+.productslider{direction: ltr;}
+.bcrumb2{margin:0px 15px 20px 0;}
+
+.reviewques{float:left; margin-left:50px;}
+
+.reviewh1 h1{margin-left: 0px; margin-right: 20px;}
+
+/*--------------------------*/
+/*---------------- review  page ------------------*/
+.ordercontenttbl th:first-child+th+th{text-align: center;}
+.ordercontenttbl td:first-child+td+td{text-align: center;}
+.ordercontenttbl td:last-child{padding-left: 0px;}
+.producttable td:last-child{text-align: left; padding-left: 5px;}
+
+
+
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+   /*-------------------------------- Portrait tablet to landscape and desktop-------------------------- */
+    @media (min-width: 768px) and (max-width: 979px) { 
+    
+    .response{background-color: yellow;}   
+    .footbox1strtl{padding:0; background-image: none;}
+
+    .nav-collapse, .nav-collapse.collapse{float:right;}
+
+
+        
+    }
+    
+
+    
+        /* ----------------------------------Landscape phone to portrait tablet --------------------------*/
+    @media (max-width: 767px) { 
+        
+        .response{background-color: orange;}
+        
+.nav-collapse, .nav-collapse.collapse{float:right;}
+
+.footbox{float:left; width:37%;}
+.footbox.footboxlast{margin:-170px 0 0 0;}
+
+.category-rtl{float:right;}
+.cat-rtl .span9 h2{margin-right: 50px;}
+
+.checkoutform {float:right; margin-right: 20px;}
+.checkoutform-right{margin-left: 0; margin-right: 20px;}
+.module {margin-left: 0; margin-right: 10%;}
+/*---------------------------------*/
+.homeaddress-wrap .row-fluid .span2,
+.officeaddress-wrap .row-fluid .span2{
+    float:left; width:60px; margin-top:0px;
+}
+
+
+        
+        
+    }
+    
+     /*---------------------------------- Landscape phones and down-------------------------- */
+    @media (max-width: 480px) { 
+        
+    .response{background-color: red;}
+
+.footbox{float:right; width:80%; margin-right: 20px;}
+.footbox.footboxlast{margin:20px 20px 0 0;}
+
+.reviewques .orangebutt, .reviewques .bluebutt {font-size: 14px; padding: 3px 7px;}
+.baskettable td:first-child + td + td + td{width:40px; padding:0; padding-right: 10px;}
+
+.slidertxt-wrap2 {width:170px;}
+
+        
+        
+    }

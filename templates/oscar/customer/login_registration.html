@@ -1,0 +1,88 @@
+{% extends "base1.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% trans 'Login or register' %} | {{ block.super }}
+{% endblock %}
+
+{#{% block breadcrumbs %}#}
+{#    <ul class="breadcrumb">#}
+{#        <li>#}
+{#            <a href="{{ homepage_url }}">Home</a>#}
+{#        </li>#}
+{#        <li class="active">Login or register'</li>#}
+{#    </ul>#}
+{#{% endblock %}#}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+
+    <div class="span12 maincontentrow loginpagecontent">
+
+
+
+        <div class="row">
+            <div class="span3 offset1">
+
+                <div class="module">
+                    <form id="login_form" action="{{ request.get_full_path }}" method="post" class="validform">
+                        <br />
+                        <h1>Log In</h1>
+                        {% csrf_token %}
+                        {% include "partials/form_fields.html" with form=login_form %}
+                         <p><a href="{% url 'password-reset' %}">{% trans "I've forgotten my password" %}</a></p>
+                        <button name="login_submit" type="submit" value="Log In" class="bluebutt" data-loading-text="{% trans "Logging in..." %}">{% trans 'Log In' %}</button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <div class="span6 offset1">
+
+                <div class="module">
+
+                    <form id="register_form" action="{{ request.get_full_path }}" method="post" class="validform">
+
+
+                        <div class="span6">
+
+                            <h1>Register</h1>
+                            {% csrf_token %}
+                            {% include "partials/form_fields.html" with form=registration_form %}
+
+                            <button name="registration_submit" type="submit" value="Register" class="bluebutt" data-loading-text="{% trans 'Registering...' %}">{% trans 'Register' %}</button>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="social">
+
+            <h1>Or Sign In with</h1>
+
+
+            <a class="facebook" href="{% url 'social:begin' 'facebook' %}" title=""></a>
+
+            <a class="twitter" href="{% url 'social:begin' 'twitter' %}" title=""></a>
+
+            <a class="instagram" href="{% url 'social:begin' 'instagram' %}" title=""></a>
+
+            <a class="googleplus" href="{% url 'social:begin' "google-oauth2" %}" title=""></a>
+{#            <a href="/accounts/google/login/?process=login" class="googleplus"></a>#}
+
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock content %}

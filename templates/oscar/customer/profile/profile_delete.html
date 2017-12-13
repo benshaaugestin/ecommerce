@@ -1,0 +1,55 @@
+{% extends "base1.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="row" style="background-color: #ffffff">
+        <div class="span3">
+            <ul class="nav nav-pills nav-stacked">
+                {% block standard_tabs %}
+                <li{% if active_tab == 'profile' %} class="active"{% endif %}>
+                <a href="{% url 'customer:profile-view' %}">{% trans "Profile" %}</a>
+                </li>
+                <li{% if active_tab == 'orders' %} class="active"{% endif %}>
+                <a href="{% url 'customer:order-list' %}">{% trans "Order History" %}</a>
+                </li>
+                <li{% if active_tab == 'addresses' %} class="active"{% endif %}>
+                <a href="{% url 'customer:address-list' %}">{% trans "Address Book" %}</a>
+                </li>
+                <li{% if active_tab == 'emails' %} class="active"{% endif %}>
+                <a href="{% url 'customer:email-list' %}">{% trans "Email History" %}</a>
+                </li>
+                <li{% if active_tab == 'alerts' %} class="active"{% endif %}>
+                <a href="{% url 'customer:alerts-list' %}">{% trans "Product Alerts" %}</a>
+                </li>
+                <li{% if active_tab == 'notifications' %} class="active"{% endif %}>
+                <a href="{% url 'customer:notifications-inbox' %}">{% trans "Notifications" %}</a>
+                </li>
+                <li{% if active_tab == 'wishlists' %} class="active"{% endif %}>
+                <a href="{% url 'customer:wishlists-list' %}">{% trans "Wish Lists" %}</a>
+                </li>
+                {% endblock %}
+            </ul>
+        </div>
+        <div class="span9">
+            <div style="padding-left: 20px">
+                <form id="delete_profile_form" action="." method="post" class="form-horizontal">
+                    <strong>{% trans "Please confirm your password to delete your profile." %}</strong>
+                    {% csrf_token %}
+                    {% include "partials/form_fields.html" %}
+                    <br/>
+                    <div class="alert alert-warning" style="width:600px" align="center  ">
+                        <h3>{% trans "Warning" %}</h3>
+                        {% blocktrans %}
+                        This will delete all information about you from the site.  Deleting your profile cannot be
+                        undone.
+                        {% endblocktrans %}
+                    </div>
+                    <div class="form-group" align="center">
+                        <button class="btn btn-lg btn-danger" type="submit" data-loading-text="{% trans 'Deleting...' %}">{% trans "Delete" %}</button>
+                        {% trans "or" %} <a href="{% url "customer:profile-view" %}">{% trans "cancel" %}</a>.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

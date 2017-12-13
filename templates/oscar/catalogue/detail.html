@@ -1,0 +1,70 @@
+{% extends "base1.html" %}
+{% block content %}
+
+{% load history_tags %}
+{% load currency_filters %}
+{% load reviews_tags %}
+{% load staticfiles %}
+{% load product_tags %}
+{% load display_tags %}
+{% load i18n %}
+{% load purchase_info_tags %}
+{% load thumbnail %}
+{% load basket_tags %}
+
+    <div style="background-color: #ffffff">
+        <div class="container-fluid page">
+            <div class="page_inner">
+                {% include "partials/alert_messages.html" %}
+                <div class="row">
+                    {# Render promotions #}
+                    {#                    <div id="promotions">#}
+                    {#                        {% for promotion in promotions_page %}#}
+                    {#                            {% render_promotion promotion %}#}
+                    {#                        {% endfor %}#}
+                    {#                    </div>#}
+
+                    {# Div exists for AJAX updates to entire content section #}
+
+                    <div class="span5 col-md-5">
+
+                        <!---------------------------IMAGE----------------------------->
+                        <div id="wowslider-container1" style="padding-left: 40px">
+                            {% include "catalogue/partials/gallery.html" %}
+                        </div>
+
+                        <div class="innerwrap vertslider">
+
+                            <!-- Start WOWSlider.com BODY section -->
+
+                            <div id="wowslider-container1">
+
+                                <div class="ws_images">
+
+                                    <ul>
+
+                                        {% for image in all_images %}
+                                            <li data-target="#product_gallery" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}">
+                                                {% thumbnail image.original "65x55" crop="center" as thumb %}
+                                                    <img src="{{ thumb.url }}" alt="{{ product.get_title }}" />
+                                                {% endthumbnail %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+
+                                </div>
+
+
+                            </div>
+                            <!-- End WOWSlider.com BODY section -->
+                        </div>
+                        <!------------------------------------END IMAGE----------------------------------->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+        {% block product_review %}
+    {% endblock %}
+{% endblock %}

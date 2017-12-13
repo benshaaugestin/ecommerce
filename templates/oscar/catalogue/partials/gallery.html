@@ -1,0 +1,101 @@
+{% load thumbnail %}
+{% load i18n %}
+{% load staticfiles %}
+{% load basket_tags %}
+{% load display_tags %}
+{% load purchase_info_tags %}
+
+{% with all_images=product.images.all %}
+    {# use length rather then count as the images get queried anyways #}
+
+
+        <!---------------------------------------------------------------->
+        <div  id="product_gallery" class="carousel slide">
+
+            <div class="span12">
+
+
+                <div class="row">
+                    <div class="span5">
+                        <div class="innerwrap vertslider">
+                            <div id="wowslider-container1">
+                                <div class="ws_images">
+                                    <div class="carousel-inner" role="listbox">
+                                    {% if all_images|length > 1 %}
+                                        {% for image in all_images %}
+                                            <div class="item {% if forloop.first %}active{% endif %}">
+                                                {% thumbnail image.original "440x400" upscale=False as thumb %}
+                                                    <img src="{{ thumb.url }}" alt="{{ product.get_title }}" id="wows1" />
+                                                {% endthumbnail %}
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        {% with image=product.primary_image %}
+                                            {% thumbnail image.original "440x400" upscale=False as thumb %}
+                                                <img src="{{ thumb.url }}" alt="{{ product.get_title }}" />
+                                            {% endthumbnail %}
+                                        {% endwith %}
+                                    {% endif %}
+                                    </div>
+                                    <a class="carousel-control left" href="#product_gallery" role="button" data-slide="prev">
+                                    <span class="icon-prev fa-stack fa-lg" aria-hidden="true">
+                                        <i class="fa fa-square-o fa-stack-2x"></i>
+                                        <i class="fa fa-angle-left fa-stack-1x"></i>
+                                    </span>
+                                    </a>
+                                    <a class="carousel-control right" href="#product_gallery" role="button" data-slide="next">
+                                    <span class="icon-next fa-stack fa-lg" aria-hidden="true">
+                                        <i class="fa fa-square-o fa-stack-2x"></i>
+                                        <i class="fa fa-angle-right fa-stack-1x"></i>
+                                    </span>
+                                    </a>
+                                </div>
+
+
+                                <div class="ws_thumbs" style="overflow: hidden;">
+                                    <ul>
+                                        {% for image in all_images %}
+                                            <li data-target="#product_gallery" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}">
+                                                {% thumbnail image.original "75x100" crop="center" as thumb %}
+                                                    <img src="{{ thumb.url }}" alt="{{ product.get_title }}" />
+                                                {% endthumbnail %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+             <!--===========================================================================-->
+                    <div class="span6 offset1 productdetailselect sliderright">
+                        <div class="innerwrap">
+                            <h1 style="color: #002a80">{{ product.get_title }}</h1>
+
+                            {% block product_stock_record %}
+                                {% include "catalogue/partials/stock_record.html" with verbose=1 %}
+                            {% endblock %}
+
+                            {% iffeature "reviews" %}
+                                {% include "catalogue/reviews/partials/review_stars.html" %}
+                            {% endiffeature %}
+                            <input type="number" class="cform" placeholder="Quantity">
+                            {% block product_basket_form %}
+                                {% include "catalogue/partials/add_to_basket_form.html" %}
+                            {% endblock %}
+
+
+
+                        </div>
+                    </div>
+
+
+             <!--=========================================================================--->
+
+            </div><div style="height: 20px"></div>
+        </div>
+        <!---------------------------------------------------------------->
+
+{% endwith %}
+
+
+
