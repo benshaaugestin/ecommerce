@@ -21,22 +21,22 @@
 
                         <tr>
 
-                            <th>Items in Basket</th> <th>Name</th> <th>Quantity</th> <th>Availability</th><th >Price</th> <th>Total</th> <th> </th>
+                            <th style="width: 120px">Items in Basket</th> <th>Name</th> <th>Quantity</th> <th>Availability</th><th >Price</th> <th>Total</th> <th> </th>
 
                         </tr>
 
                         {% block basket_form_main %}
                             <form action="." method="post" class="validform" id="basket_formset">
-                            {% csrf_token %}
-    {{ formset.management_form }}
+                                {% csrf_token %}
+                                {{ formset.management_form }}
                                 {% for form in formset %}
                                     {% with line=form.instance product=form.instance.product %}
                                         {% purchase_info_for_line request line as session %}
 
                                         {% with image=product.primary_image %}
-                                                            {{ form.id }}
+                                            {{ form.id }}
 
-                                            <tr>
+                                        <tr>
 
                                             <td>     {% thumbnail image.original "100x100" upscale=False as thumb %}
                                                 <a href="{{ product.get_absolute_url }}">
@@ -47,7 +47,7 @@
                                         {% endwith %}
 
 
-                                    <td style="font-weight: bold">    <a href="{{ product.get_absolute_url }}">{{ line.description }}5u6ru7t</a></td>
+                                    <td style="font-weight: bold">    <a href="{{ product.get_absolute_url }}">{{ line.description }}</a></td>
 
                                     {% if form.errors %}error{% endif %}
                                     <td>
@@ -93,14 +93,15 @@
                                         {% endif %}
                                         </div>
 
-                                        <div>
-                                            <td> <td><a href="#"><img src="{% static 'img/delete.png' %}" class="ico" alt="img"></a><a href="#"><img src="{% static 'img/save.png' %}" class="ico"></a></td>
-</td>
-                                        </div>
 
-                                        </div>
-                                        </div>
-                                        </div>
+                                        <td>
+                                            <a href="#" data-id="{{ forloop.counter0 }}" data-behaviours="remove" class="inline"><img src="{% static 'img/delete.png' %}" class="ico" alt="img"></a>
+                                            <a href="#" data-id="{{ forloop.counter0 }}" data-behaviours="save" class="inline"><img src="{% static 'img/save.png' %}" class="ico"></a>
+                                        </td>
+
+
+                                    </div>
+
                                     {% endwith %}
                                 {% endfor %}
                             </tr>

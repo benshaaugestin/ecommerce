@@ -21,7 +21,7 @@
 
     <meta name="author" content="Tedallal">
     <link rel="shortcut icon"  href="../../static/oscar/favicon.ico"/>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 
     <!-- Le styles -->
 
@@ -148,7 +148,7 @@
                 <div class="span12 headrow">
                     <div class="row">
                         <div class="span2">
-                            <div class="logo"><a href="{% url 'catalogue:index' %}"><img src="{% static '/img/logo.png' %}" alt="Tedallal"/></a></div>
+                            <div class="logo"><a href="{% url 'catalogue:index' %}"><img src="{% static '/img/logos.png' %}" alt="allal" height="61" width="153"/></a></div>
                         </div>
                         <div class="span10">
                             <div class="navbarwrap">
@@ -300,15 +300,6 @@
                             <div class="footbox footbox1st">
                                 <h3>Information</h3>
                                     <ul>
-                                        <li><a href="#">Contact Us</a></li><br/>
-
-                                        <li><a href="#">Delivery</a></li><br/>
-
-                                        <li><a href="#">Returns</a></li><br/>
-
-                                        <li><a href="#">Terms &AMP; Conditions</a></li><br/>
-
-                                        <li><a href="#">Privacy Policy</a></li><br/>
 
                                         <li><a href="/about_us/">About Us</a></li><br />
                                     </ul>
@@ -330,11 +321,16 @@
 
                                     <li><a href="#">Order History</a></li><br />
 
-                                    <li><a href="/accounts/wishlists/50d0d7/">Wishlist</a></li><br />
 
-                                    <li><a href="#">Cancel Account</a></li><br />
+                                    <li>
+                                   {% with wishlists=user.wishlists.all %}
+                                   {% for wishlist in wishlists %}
+                                        {% blocktrans with name=wishlist.name url=wishlist.get_absolute_url %}
+                                            <a href="{{ url }}">wishlist</a>
+                                        {% endblocktrans %}
+                                   {% endfor %}
+                                   {% endwith %}</li><br />
 
-                                    <li><a href="#">Something else</a></li><br />
                                 </ul>
 
                             </div>
@@ -399,7 +395,7 @@
 
                             <div class="copyright">
 
-                                &COPY; 2013 Tedallal Co. ALL RIGHTS RESERVED.
+                                &COPY; 2017 DemoShop Co. ALL RIGHTS RESERVED.
 
                                 <a href="#"><img src="img/logo.png"></a>
 
@@ -418,10 +414,15 @@
 <!-- Le javascript
 
         ================================================== -->
+        {% block cdn_scripts %}
+            <!-- jQuery -->
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+            <script>window.jQuery || document.write('<script src="{% static "oscar/js/jquery/jquery-1.9.1.min.js" %}"><\/script>')</script>
+        {% endblock %}
 
         <script type="text/javascript" src="{% static 'js/jquery-1.8.2.min.js' %}"></script>
-
         <script src="{% static 'js/bootstrap.min.js'%}"></script>
+
 
         <script src="{% static 'js/modernizr.custom.17475.js' %}"></script>
 

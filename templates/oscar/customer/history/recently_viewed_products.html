@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load product_tags %}
+
+{% with products_sliced=products|slice:":4" %}
+    {% if products_sliced %}
+        <div class="sub-header">
+            <h3 align="center">{% trans 'Products you recently viewed' %}</h3>
+        </div>
+
+        <ul class="row" type="none">
+            {% for product in products_sliced %}
+            <div style="width: 200px; height: 270px; display: inline-block; padding-left: 30px">
+                <li class="col-xs-6 col-sm-4 col-md-3 col-lg-3">{% render_product product %}</li>
+            </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}

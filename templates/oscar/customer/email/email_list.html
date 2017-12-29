@@ -34,55 +34,30 @@
         </div>
         <div class="span9">
 
-
 {% block tabcontent %}
-    {% if wishlists %}
+    {% if emails %}
         <table class="table table-striped table-bordered">
-            <tbody>
+            <thead>
                 <tr>
-                    <th>{% trans 'Name' %}</th>
-                    <th>{% trans 'Number of products' %}</th>
-                    <th>{% trans 'Action' %}</th>
+                    <th>{% trans 'Subject' %}</th>
+                    <th>{% trans 'Date sent' %}</th>
                 </tr>
-                {% for wishlist in wishlists %}
+            </thead>
+            <tbody>
+                {% for email in emails %}
                     <tr>
-                        <td><a href="{% url 'customer:wishlists-detail' key=wishlist.key %}">{{ wishlist.name }}</a></td>
-                        <td>{{ wishlist.lines.count }}</td>
                         <td>
-                            <div class="btn-group">
-                                <a class="btn btn-default" href="{% url 'customer:wishlists-detail' key=wishlist.key %}">{% trans 'View' %}</a>
-                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{% url 'customer:wishlists-update' key=wishlist.key %}">
-                                            {% trans 'Wish list settings' %}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{% url 'customer:wishlists-delete' key=wishlist.key %}">
-                                            {% trans 'Delete' %}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <a href="{% url 'customer:email-detail' email_id=email.id %}">{{ email.subject }}</a>
                         </td>
+                        <td>{{ email.date_sent }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
         {% include "partials/pagination.html" %}
     {% else %}
-        <p>
-            {% trans "You don't have any wish lists yet." %}
-        </p>
+        <p>{% trans 'No emails found' %}</p>
     {% endif %}
-
-    <p>
-        <a href="{% url 'customer:wishlists-create' %}" class="btn btn-primary">{% trans 'Create a new wish list' %}</a>
-    </p>
-
 {% endblock tabcontent %}
             </div>
 {% endblock content %}

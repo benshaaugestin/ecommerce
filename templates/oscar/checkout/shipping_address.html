@@ -1,4 +1,3 @@
-
 {% extends "base1.html" %}
 
 {% block content %}
@@ -20,6 +19,7 @@
     </div>
     {% if user.is_authenticated %}
         {% if addresses %}
+
             <h3>{% trans "An address from your address book?" %}</h3>
             <div class="choose-block">
                 <div class="row">
@@ -68,6 +68,7 @@
     {% endif %}
 
     {% block new_address_form %}
+
         <div class="well">
             <form action="{% url 'checkout:shipping-address' %}" method="post" id="new_shipping_address" class="form form-horizontal">
                 {% csrf_token %}
