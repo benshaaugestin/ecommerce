@@ -13,7 +13,7 @@ django-treebeard==4.1.2
 django-widget-tweaks==1.4.1
 factory-boy==2.9.2
 Faker==0.8.7
-httplib2==0.10.3
+httplib2==0.18.0
 idna==2.6
 mock==2.0.0
 oauth2==1.9.0.post1
